@@ -23,14 +23,15 @@ def openalldata(csvfile, transformfile, modelfile):
 fileloc, powertrans, model = openalldata(csvfile, transformfile, modelfile)
 
 
-def predict_price(location, bedroom, toilet, sqm_lot, sqm_living):
+def predict_price(location, bedroom, toilet, carport, sqm_lot, sqm_living):
     loc_index = np.where(fileloc.columns == location)[0][0]
 
-    x = np.zeros(len(fileloc.columns))
+    x = np.zeros(len(x.columns))
     x[0] = bedroom
     x[1] = toilet
-    x[2] = sqm_lot
-    x[3] = sqm_living
+    x[2] = carport
+    x[3] = sqm_lot
+    x[4] = sqm_living
     if loc_index >= 0:
         x[loc_index] = 1
     x = powertrans.transform(np.array(x).reshape(1, len(x)))
@@ -51,6 +52,7 @@ for i in fileloc.columns:
 region = st.selectbox('Choose the region', regions)
 bedroom = st.number_input('Bedroom', 0)
 toilet = st.number_input('Toilet', 0)
+carport = st.number_input('Carport', 0)
 sqm_lot = st.number_input('Lot Area (m²)')
 sqm_living = st.number_input('Building Area (m²)')
 button = st.button('Make prediction')
