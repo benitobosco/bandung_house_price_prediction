@@ -26,7 +26,7 @@ fileloc, powertrans, model = openalldata(csvfile, transformfile, modelfile)
 def predict_price(location, bedroom, toilet, carport, sqm_lot, sqm_living):
     loc_index = np.where(fileloc.columns == location)[0][0]
 
-    x = np.zeros(len(x.columns))
+    x = np.zeros(len(fileloc.columns))
     x[0] = bedroom
     x[1] = toilet
     x[2] = carport
@@ -38,10 +38,6 @@ def predict_price(location, bedroom, toilet, carport, sqm_lot, sqm_living):
     predict = model.predict(x)[0]
     return predict
 
-# p = predict_price("Bandung Kota, Bandung",2,1,300,160)
-#
-# st.write(p)
-# st.text('Fixed width text')
 
 regions = []
 
@@ -58,6 +54,6 @@ sqm_living = st.number_input('Building Area (m²)')
 button = st.button('Make prediction')
 
 if button:
-    pricepred = predict_price(region, bedroom, toilet, sqm_lot, sqm_living)
+    pricepred = predict_price(region, bedroom, toilet, carport, sqm_lot, sqm_living)
     st.success("Your house price is Rp{:,.2f}".format(pricepred))
 
